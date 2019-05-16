@@ -24,7 +24,7 @@ public class SimpleServer {
 
         // 1. 传输层定义
         ServerSocket serverSocket = new ServerSocket(ServerConfig.SERVER_PORT);
-        TServerSocket tServerSocket = new TServerSocket(serverSocket);
+        TServerSocket transport = new TServerSocket(serverSocket);
 
         // 2. 协议层定义
         // 常用协议:
@@ -40,7 +40,7 @@ public class SimpleServer {
                 new HelloWorldService.Processor<HelloWorldService.Iface>(new HelloWorldServiceImpl());
 
         // 4. 初始化服务器参数
-        TSimpleServer.Args tArgs = new TSimpleServer.Args(tServerSocket);
+        TSimpleServer.Args tArgs = new TSimpleServer.Args(transport);
         tArgs.protocolFactory(protocolFactory);
         tArgs.processor(processor);
 
