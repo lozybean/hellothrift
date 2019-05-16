@@ -14,7 +14,7 @@ import java.net.ServerSocket;
 public class ThreadPoolServer {
     // One Thread Per Connection
     public static void main(String[] args) throws Exception {
-        TServerSocket transport = new TServerSocket(new ServerSocket(ServerConfig.SERVER_PORT));
+        TServerSocket socket = new TServerSocket(new ServerSocket(ServerConfig.SERVER_PORT));
 
         TCompactProtocol.Factory protocolFactory = new TCompactProtocol.Factory();
 
@@ -22,7 +22,7 @@ public class ThreadPoolServer {
                 new HelloWorldService.Processor<>(new HelloWorldServiceImpl());
 
 
-        TThreadPoolServer.Args tArgs = new TThreadPoolServer.Args(transport);
+        TThreadPoolServer.Args tArgs = new TThreadPoolServer.Args(socket);
 
         tArgs.protocolFactory(protocolFactory);
         tArgs.processor(processor);

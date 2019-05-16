@@ -10,6 +10,7 @@ import org.apache.thrift.protocol.TCompactProtocol;
 import org.apache.thrift.server.TServer;
 import org.apache.thrift.server.TSimpleServer;
 import org.apache.thrift.transport.TServerSocket;
+import org.apache.thrift.transport.TTransportFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +25,7 @@ public class SimpleServer {
 
         // 1. 传输层定义
         ServerSocket serverSocket = new ServerSocket(ServerConfig.SERVER_PORT);
-        TServerSocket transport = new TServerSocket(serverSocket);
+        TServerSocket socket = new TServerSocket(serverSocket);
 
         // 2. 协议层定义
         // 常用协议:
@@ -40,7 +41,7 @@ public class SimpleServer {
                 new HelloWorldService.Processor<HelloWorldService.Iface>(new HelloWorldServiceImpl());
 
         // 4. 初始化服务器参数
-        TSimpleServer.Args tArgs = new TSimpleServer.Args(transport);
+        TSimpleServer.Args tArgs = new TSimpleServer.Args(socket);
         tArgs.protocolFactory(protocolFactory);
         tArgs.processor(processor);
 
